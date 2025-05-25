@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BaseTypes",
+  "type": "object",
+  "properties": {
+    "URI": { "type": "string", "format": "uri" },
+    "MimeType": { "type": "string" },
+    "Timestamp": { "type": "string", "format": "date-time" },
+    "Currency": { "type": "string" },
+    "Amount": { "type": "string" }
+  }
+} 

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JobkitManifest",
+  "type": "object",
+  "properties": {
+    "agentId": { "type": "string" },
+    "agentSkills": { "type": "array", "items": { "type": "string" } },
+    "agentTooling": { "type": "array", "items": { "type": "string" } },
+    "agentInputTypes": { "type": "array", "items": { "type": "string" } },
+    "agentOutputTypes": { "type": "array", "items": { "type": "string" } },
+    "agentVersion": { "type": "string" },
+    "agentSignature": { "type": "string" }
+  },
+  "required": [
+    "agentId",
+    "agentSkills",
+    "agentTooling",
+    "agentInputTypes",
+    "agentOutputTypes",
+    "agentVersion",
+    "agentSignature"
+  ]
+} 

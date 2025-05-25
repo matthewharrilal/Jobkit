@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JobFilter",
+  "type": "object",
+  "properties": {
+    "status": { "type": "string" },
+    "creator": { "type": "string" },
+    "agentId": { "type": "string" },
+    "inputType": { "type": "string" },
+    "outputType": { "type": "string" }
+  },
+  "additionalProperties": false
+} 
