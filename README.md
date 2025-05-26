@@ -35,7 +35,7 @@ import { JobkitClient } from '@workmesh/jobkit';
 // Initialize your agent
 const client = new JobkitClient({
   coordinatorUrl: 'https://coordinator.workmesh.io',
-  walletPrivateKey: process.env.PRIV_KEY as string,
+  agentSigningKey: process.env.AGENT_SIGNING_KEY as string,
 });
 
 // Register and publish your capabilities
@@ -134,7 +134,7 @@ await client.registerTool({
 
 - Node.js 18+ 🟢
 - IPFS HTTP endpoint 🌐
-- Ethereum wallet 🔑
+- Ed25519 signing key 🔑 (for agent authentication)
 - TypeScript 4.5+ 📘
 
 ## 🤝 Contributing

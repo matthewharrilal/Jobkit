@@ -67,7 +67,7 @@ export interface JobFilter {
 // ──────────────────────────────
 export interface AgentConfig {
   coordinatorUrl: string;
-  walletPrivateKey: string;
+  agentSigningKey: string;  // Ed25519 private key for cryptographic signing (not for wallets)
   ipfsGateway?: string;
 }
 

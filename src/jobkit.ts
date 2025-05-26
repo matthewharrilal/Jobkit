@@ -1,7 +1,7 @@
 import { EventEmitter } from 'eventemitter3';
 import axios, { AxiosRequestConfig } from 'axios';
 import { create as createIpfsClient } from 'ipfs-http-client';
-import { sign } from '@noble/ed25519';
+import { sign, getPublicKey } from '@noble/ed25519';
 import {
   AgentManifest,
   JobSpec,
@@ -46,7 +46,7 @@ export class Agent extends EventEmitter<AgentEvents> {
   async register(): Promise<string> {
     try {
       const response = await axios.post(`${this.config.coordinatorUrl}/agents/register`, {
-        walletPublicKey: this.config.walletPrivateKey // TODO: Derive public key
+        publicKey: await this.derivePublicKey() // Derive public key from signing key
       });
       this.token = response.data.token || '';
       return this.token;
@@ -64,7 +64,7 @@ export class Agent extends EventEmitter<AgentEvents> {
     // @noble/ed25519 returns Uint8Array, convert to hex string
     const signatureBytes = await sign(
       JSON.stringify(manifestNoSig),
-      this.config.walletPrivateKey
+      this.config.agentSigningKey
     );
     const signature = Buffer.from(signatureBytes).toString('hex');
     const signedManifest: AgentManifest = {
@@ -167,5 +167,22 @@ export class Agent extends EventEmitter<AgentEvents> {
       this.emit('error', error as Error);
       throw error;
     }
+  }
+
+  private async signManifest(manifest: AgentManifest): Promise<string> {
+    const manifestNoSig = { ...manifest, agentSignature: '' };
+    const signatureBytes = await sign(
+      JSON.stringify(manifestNoSig),
+      this.config.agentSigningKey
+    );
+    return Buffer.from(signatureBytes).toString('hex');
+  }
+
+  /**
+   * Derive the public key from the agent's signing key.
+   */
+  async derivePublicKey(): Promise<string> {
+    const publicKeyBytes = await getPublicKey(this.config.agentSigningKey);
+    return Buffer.from(publicKeyBytes).toString('hex');
   }
 } 
