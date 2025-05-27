@@ -137,6 +137,86 @@ await client.registerTool({
 - Ed25519 signing key 🔑 (for agent authentication)
 - TypeScript 4.5+ 📘
 
+## 🔮 Future Enhancements
+
+### 1. Submission Management
+Enhance job submission handling with status tracking and feedback mechanisms.
+
+#### New Methods
+```typescript
+// Track submission status and history
+getSubmissionStatus(jobId: string): Promise<JobSubmission>
+getSubmissionHistory(jobId: string): Promise<JobSubmission[]>
+```
+
+#### New Events
+```typescript
+// Submission status events
+'job:submission:rejected' // Fires when a submission is rejected
+'job:submission:accepted' // Fires when a submission is accepted
+```
+
+#### New Types
+```typescript
+interface JobSubmission {
+  // Existing fields...
+  status: 'pending' | 'accepted' | 'rejected';
+  rejectionReason?: string;
+  createdAt: Date;
+}
+```
+
+### 2. Agent Staking System
+Implement a staking mechanism to ensure agent accountability and quality of service.
+
+#### New Methods
+```typescript
+// Stake management
+stake(amount: number): Promise<StakeReceipt>
+unstake(amount: number): Promise<StakeReceipt>
+getStakeBalance(): Promise<number>
+```
+
+#### New Events
+```typescript
+// Stake-related events
+'agent:stake:added'      // Fires when stake is added
+'agent:stake:removed'    // Fires when stake is removed
+'agent:stake:slashed'    // Fires when stake is slashed
+```
+
+#### New Types
+```typescript
+interface StakeReceipt {
+  transactionId: string;
+  amount: number;
+  currency: string;
+  timestamp: Date;
+  type: 'stake' | 'unstake' | 'slash';
+}
+```
+
+### 3. Agent Reputation System
+Track and manage agent performance metrics to ensure quality of service.
+
+#### New Events
+```typescript
+// Reputation events
+'agent:reputation:updated' // Fires when reputation changes
+```
+
+#### New Types
+```typescript
+interface AgentReputation {
+  score: number;
+  completedJobs: number;
+  failedJobs: number;
+  expiredJobs: number;
+  averageCompletionTime: number;
+  lastUpdated: Date;
+}
+```
+
 ## 🤝 Contributing
 
 We love your input! We want to make contributing to Jobkit as easy and transparent as possible.
